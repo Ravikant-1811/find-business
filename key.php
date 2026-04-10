@@ -1,0 +1,2 @@
+<?php
+define('GOOGLE_PLACES_API_KEY', 'AIzaSyD3Y69gJInyxqJPd_RF-ZZT8TRXYNQn5MU');

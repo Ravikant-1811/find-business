@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Form Test</title>
+    <style>
+        body { font-family: Arial; padding: 20px; max-width: 600px; margin: 0 auto; }
+        input, button { width: 100%; padding: 10px; margin: 5px 0; box-sizing: border-box; }
+        button { background: #667eea; color: white; border: none; cursor: pointer; margin-top: 15px; }
+        #result { background: #f5f5f5; padding: 15px; margin-top: 20px; white-space: pre-wrap; word-break: break-all; }
+        h3 { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Debug Form Submission</h2>
+    
+    <input type="text" id="full_name" value="John Doe" placeholder="Full Name">
+    <input type="email" id="email" value="john@example.com" placeholder="Email">
+    <input type="text" id="phone" value="9876543210" placeholder="Phone">
+    <input type="text" id="business_name" value="Test Business" placeholder="Business Name">
+    <input type="text" id="category" value="Restaurant" placeholder="Category">
+    <input type="text" id="business_place" value="123 Main St" placeholder="Address">
+    <input type="text" id="city" value="Mumbai" placeholder="City">
+    <input type="text" id="state" value="Maharashtra" placeholder="State">
+    <input type="text" id="pincode" value="400001" placeholder="Pincode">
+    <input type="text" id="website" value="" placeholder="Website">
+    
+    <button onclick="testMethod1()">Test Method 1: URLSearchParams</button>
+    <button onclick="testMethod2()" style="background: #10b981;">Test Method 2: FormData</button>
+    <button onclick="testMethod3()" style="background: #f59e0b;">Test Method 3: Regular Form</button>
+    <button onclick="testMethod4()" style="background: #ef4444;">Test Method 4: jQuery</button>
+    
+    <h3>Result:</h3>
+    <div id="result">Click a button to test...</div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    // Method 1: URLSearchParams
+    async function testMethod1() {
+        document.getElementById('result').textContent = 'Testing Method 1...';
+        
+        const params = new URLSearchParams();
+        params.append('full_name', document.getElementById('full_name').value);
+        params.append('email', document.getElementById('email').value);
+        params.append('phone', document.getElementById('phone').value);
+        params.append('business_name', document.getElementById('business_name').value);
+        params.append('category', document.getElementById('category').value);
+        params.append('business_place', document.getElementById('business_place').value);
+        params.append('city', document.getElementById('city').value);
+        params.append('state', document.getElementById('state').value);
+        params.append('pincode', document.getElementById('pincode').value);
+        params.append('website', document.getElementById('website').value);
+        
+        console.log('Sending:', params.toString());
+        
+        try {
+            const response = await fetch('debug_test.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: params.toString()
+            });
+            const result = await response.text();
+            document.getElementById('result').textContent = 'Method 1 Result:\n' + result;
+        } catch (e) {
+            document.getElementById('result').textContent = 'Error: ' + e.message;
+        }
+    }
+    
+    // Method 2: FormData
+    async function testMethod2() {
+        document.getElementById('result').textContent = 'Testing Method 2...';
+        
+        const formData = new FormData();
+        formData.append('full_name', document.getElementById('full_name').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('phone', document.getElementById('phone').value);
+        formData.append('business_name', document.getElementById('business_name').value);
+        formData.append('category', document.getElementById('category').value);
+        formData.append('business_place', document.getElementById('business_place').value);
+        formData.append('city', document.getElementById('city').value);
+        formData.append('state', document.getElementById('state').value);
+        formData.append('pincode', document.getElementById('pincode').value);
+        formData.append('website', document.getElementById('website').value);
+        
+        try {
+            const response = await fetch('debug_test.php', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.text();
+            document.getElementById('result').textContent = 'Method 2 Result:\n' + result;
+        } catch (e) {
+            document.getElementById('result').textContent = 'Error: ' + e.message;
+        }
+    }
+    
+    // Method 3: Regular form submit simulation
+    async function testMethod3() {
+        document.getElementById('result').textContent = 'Testing Method 3...';
+        
+        const data = 'full_name=' + encodeURIComponent(document.getElementById('full_name').value) +
+                     '&email=' + encodeURIComponent(document.getElementById('email').value) +
+                     '&phone=' + encodeURIComponent(document.getElementById('phone').value) +
+                     '&business_name=' + encodeURIComponent(document.getElementById('business_name').value) +
+                     '&category=' + encodeURIComponent(document.getElementById('category').value) +
+                     '&business_place=' + encodeURIComponent(document.getElementById('business_place').value) +
+                     '&city=' + encodeURIComponent(document.getElementById('city').value) +
+                     '&state=' + encodeURIComponent(document.getElementById('state').value) +
+                     '&pincode=' + encodeURIComponent(document.getElementById('pincode').value) +
+                     '&website=' + encodeURIComponent(document.getElementById('website').value);
+        
+        try {
+            const response = await fetch('debug_test.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: data
+            });
+            const result = await response.text();
+            document.getElementById('result').textContent = 'Method 3 Result:\n' + result;
+        } catch (e) {
+            document.getElementById('result').textContent = 'Error: ' + e.message;
+        }
+    }
+    
+    // Method 4: jQuery
+    function testMethod4() {
+        document.getElementById('result').textContent = 'Testing Method 4...';
+        
+        $.ajax({
+            url: 'debug_test.php',
+            type: 'POST',
+            data: {
+                full_name: $('#full_name').val(),
+                email: $('#email').val(),
+                phone: $('#phone').val(),
+                business_name: $('#business_name').val(),
+                category: $('#category').val(),
+                business_place: $('#business_place').val(),
+                city: $('#city').val(),
+                state: $('#state').val(),
+                pincode: $('#pincode').val(),
+                website: $('#website').val()
+            },
+            success: function(result) {
+                $('#result').text('Method 4 Result:\n' + JSON.stringify(result, null, 2));
+            },
+            error: function(xhr, status, error) {
+                $('#result').text('Error: ' + error);
+            }
+        });
+    }
+    </script>
+</body>
+</html>

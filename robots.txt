@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://find-business.com/sitemap.xml
