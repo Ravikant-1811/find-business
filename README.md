@@ -1,38 +1,73 @@
-# Find Business Platform
+# Find Business
 
-Find Business Platform is a PHP-based web application for business listings, categories, discounts, and more. This project includes features such as business submission, category browsing, discount management, and contact forms.
+Find Business is a PHP + MySQL web platform for business discovery, listing submissions, and lead-style follow-up data collection.  
+It includes directory pages, category/discovery views, business profile pages, and form-based user interactions.
 
-## Features
+## Core Features
 
-- Business directory and listings
-- Category and discount management
-- Blog and FAQ pages
-- Contact and feedback forms
-- Google integration for place details
-- Admin and user interfaces
+- Business listing and discovery pages
+- Category and discount browsing flows
+- Business submission forms
+- Contact and feedback pages
+- Google Places related integrations
+- API/AJAX endpoints for async operations
+
+## Tech Stack
+
+- PHP (procedural, multi-page architecture)
+- MySQL / MariaDB
+- HTML, CSS, JavaScript
+- Apache or Nginx (local or production)
 
 ## Project Structure
 
-- PHP scripts for core functionality (e.g., `index.php`, `add_business.php`)
-- `api/` for API endpoints
-- `ajax/` for AJAX handlers
-- `assets/` for CSS and static files
-- `database/` for SQL files
-- `uploads/` and `photos/` for user content
+- `index.php` - main landing/listing entry point
+- `add_business.php` - business submission flow
+- `place_details.php` - business detail screen
+- `api/` - API handlers/endpoints
+- `ajax/` - asynchronous request handlers
+- `assets/` - CSS, UI assets, static files
+- `database/` - SQL dump and schema-related files
+- `photos/` - uploaded or listing images
 
-## Setup
+## Local Setup
 
 1. Clone the repository.
-2. Import the SQL file from `database/u792021313_directory.sql` into your MySQL database.
-3. Configure database credentials in `config.php`.
-4. Serve the project using a local or remote PHP server.
+2. Create a MySQL database.
+3. Import the SQL dump:
+   ```bash
+   mysql -u root -p your_database_name < database/u792021313_directory.sql
+   ```
+4. Update database credentials in `config.php`.
+5. Start a local PHP server from project root:
+   ```bash
+   php -S localhost:8000
+   ```
+6. Open [http://localhost:8000](http://localhost:8000).
 
-## Requirements
+## Optional Table Bootstrap
 
-- PHP 7.x or higher
-- MySQL
-- Web server (Apache, Nginx, etc.)
+If you want to create/update the `data_places` table structure used by Google place data:
+
+```bash
+php setup_database.php
+```
+
+## Configuration Notes
+
+- `config.php` currently contains hardcoded DB credentials and an API key.
+- Recommended improvement:
+  - move secrets to environment variables
+  - rotate exposed credentials/API keys before production deployment
+  - keep production config outside version-controlled files
+
+## Production Notes
+
+- Enable HTTPS and secure headers.
+- Validate and sanitize all form inputs server-side.
+- Restrict direct access to debug/test files before deployment.
+- Set correct file/folder permissions for `photos/` and session storage.
 
 ## License
 
-This project is for demonstration and educational purposes.
+Internal business project. Add your preferred license if distributing publicly.
